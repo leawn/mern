@@ -6,7 +6,7 @@ const Users = () => {
         {
             _id: 'u1',
             name: 'Leo',
-            image: '',
+            image: 'https://i.ytimg.com/vi/M2u20FQiYok/maxresdefault.jpg',
             places: 2
         }
     ];
