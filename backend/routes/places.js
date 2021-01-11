@@ -15,8 +15,11 @@ router.post(
         check('title')
             .not()
             .isEmpty(),
-        check('description').isLength({ min: 5 }),
-        check('address').not().isEmpty()
+        check('description')
+            .isLength({ max: 5 }),
+        check('address')
+            .not()
+            .isEmpty()
     ],
     placesControllers.createPlace
 );
@@ -28,7 +31,7 @@ router.patch(
             .not()
             .isEmpty(),
         check('description')
-            .isLength({ min: 5 })
+            .isLength({ max: 5 })
     ],
     placesControllers.updatePlace
 );
