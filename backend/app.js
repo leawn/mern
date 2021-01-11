@@ -6,7 +6,7 @@ const placesRoutes = require('./routes/places');
 const usersRoutes = require('./routes/users');
 const HttpError = require('./models/http-error');
 
-const MONGODB_URI = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}localhost:27017/${process.env.MONGO_DEFAULT_DATABASE}`;
+const MONGODB_URI = `mongodb://localhost:27017/geoapp`;
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-    .connect(MONGODB_URI)
+    .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         app.listen(3002);
     })

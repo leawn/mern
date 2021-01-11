@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const { validate } = require('../util/validate');
 const HttpError = require('../models/http-error');
 const getCoordsForAddress = require('../util/location');
+const Place = require('../models/place');
 
 let DUMMY_PLACES = [
     {
@@ -51,14 +52,21 @@ const createPlace = async (req, res, next) => {
     } catch (err) {
         return next(err);
     }
-    const createdPlace = {
-        _id: uuidv4(),
+    const createdPlace = new Place({
         title,
         description,
-        location,
         address,
+        location,
+        image: 'linktotheimage',
         creator
-    };
+    });
+
+    try {
+        await createdPlace.save();
+    } catch (err) {
+        console.log(err);
+        return next(new HttpError('Creating place failed, please try again.', 500));
+    }
 
     DUMMY_PLACES.push(createdPlace);
 
