@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const placesRoutes = require('./routes/places');
 const usersRoutes = require('./routes/users');
 const HttpError = require('./models/http-error');
+
+const MONGODB_URI = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}localhost:27017/${process.env.MONGO_DEFAULT_DATABASE}`;
 
 const app = express();
 
@@ -25,4 +28,11 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || 'An unknown error occurred'});
 });
 
-app.listen(3002);
+mongoose
+    .connect(MONGODB_URI)
+    .then(() => {
+        app.listen(3002);
+    })
+    .catch(err => {
+        console.log(err);
+    });

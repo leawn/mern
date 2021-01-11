@@ -1,4 +1,6 @@
-const uuid = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
+
+const { validate } = require('../util/validate');
 const HttpError = require('../models/http-error');
 
 const DUMMY_USERS = [
@@ -15,6 +17,8 @@ const getUsers = (req, res, next) => {
 }
 
 const signup = (req, res, next) => {
+    validate(req, next);
+
     const { name, email, password } = req.body;
 
     const hasUser = DUMMY_USERS.find(u => u.email === email);
@@ -22,7 +26,7 @@ const signup = (req, res, next) => {
         return next(HttpError('Could not identify user, email already exists.', 401));
     }
     const createdUser = {
-        _id: uuid(),
+        _id: uuidv4(),
         name,
         email,
         password
