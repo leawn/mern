@@ -51,7 +51,7 @@ const getPlacesByUserId = async (req, res, next) => {
 
 const createPlace = async (req, res, next) => {
     const errors = validationResult(req);
-    if (errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         return next(new HttpError('Invalid inputs passed.', 422));
     }
 
@@ -85,7 +85,7 @@ const createPlace = async (req, res, next) => {
 
 const updatePlace = async (req, res, next) => {
     const errors = validationResult(req);
-    if (errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         return next(new HttpError('Invalid inputs passed.', 422));
     }
 
